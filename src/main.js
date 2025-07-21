@@ -4,7 +4,7 @@ import 'izitoast/dist/css/iziToast.min.css';
 import { getImagesByQuery } from './js/pixabay-api.js';
 import {
   clearGallery,
-  createGallery,
+  renderImages,
   showLoader,
   hideLoader,
 } from './js/render-functions.js';
@@ -18,7 +18,7 @@ form.addEventListener('submit', async event => {
   const query = form.elements['search-text'].value.trim();
   if (!query) return;
 
-  clearGallery();
+  clearGallery(gallery);
   showLoader();
 
   try {
@@ -33,7 +33,7 @@ form.addEventListener('submit', async event => {
       return;
     }
 
-    createGallery(data.hits);
+    renderImages(data.hits, gallery); 
   } catch (error) {
     iziToast.error({
       message: 'Something went wrong. Try again later.',
